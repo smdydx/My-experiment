@@ -1,4 +1,4 @@
-modules = ["nodejs-20", "web"]
+modules = ["nodejs-20", "python-3.11", "web"]
 
 [nix]
 channel = "stable-24_05"
@@ -13,7 +13,7 @@ mode = "sequential"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "cd MyFullstack/HEDNORBACKEND && python main.py"
+args = "cd MyFullstack/HEDNORBACKEND && python3 main.py"
 
 [[workflows.workflow]]
 name = "Frontend"
@@ -31,8 +31,16 @@ mode = "parallel"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "cd MyFullstack/HEDNORBACKEND && python main.py"
+args = "cd MyFullstack/HEDNORBACKEND && python3 main.py"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "cd MyFullstack/HednorFrontend-develop && npm run dev"
+
+[[ports]]
+localPort = 3000
+externalPort = 80
+
+[[ports]]
+localPort = 4000
+externalPort = 3000
