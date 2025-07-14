@@ -20,14 +20,16 @@ const PageLogin: React.FC = () => {
   const mutation = useMutation({
     mutationFn: loginAuth,
     onSuccess: (data) => {
-      console.log('Login success:', data.access_token);
-      dispatch(tokenStore({ token: data.access_token }));
+      console.log('Login success:', data);
+      dispatch(tokenStore({ token: data.token, user: data.user }));
+      alert(data.message);
       router.push("/account");
       setLoading(false);
     },
-    onError: (error: Error) => {
+    onError: (error: any) => {
       console.error('Login failed', error);
-      alert(error.message);
+      const errorMessage = error.response?.data?.detail || error.message || 'Login failed';
+      alert(errorMessage);
       setLoading(false);
     },
   });
