@@ -18,12 +18,7 @@ export const loginAuth = async ({ email, password }: { email: string; password: 
   }
 };
 
-export const signupAuth = async ({ name, email, password }: { name: string; email: string; password: string }) => {
-  // Split name into firstName and lastName
-  const nameParts = name.trim().split(' ');
-  const firstName = nameParts[0] || '';
-  const lastName = nameParts.slice(1).join(' ') || '';
-
+export const signupAuth = async ({ firstName, lastName, email, password }: { firstName: string; lastName: string; email: string; password: string }) => {
   console.log('API Request details:');
   console.log('URL:', `${BASE_URL}/api/auth/register`);
   console.log('Payload:', { firstName, lastName, email, password: '***' });

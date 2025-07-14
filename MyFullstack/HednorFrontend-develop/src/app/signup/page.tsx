@@ -18,7 +18,8 @@ const PageSignUp = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [name, setName] = useState<string>("");
+  const [firstName, setFirstName] = useState<string>("");
+  const [lastName, setLastName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
@@ -49,7 +50,7 @@ const PageSignUp = () => {
     e.preventDefault();
 
     // Basic validation
-    if (!name.trim() || !email.trim() || !password.trim()) {
+    if (!firstName.trim() || !lastName.trim() || !email.trim() || !password.trim()) {
       alert("Please fill in all required fields");
       return;
     }
@@ -64,11 +65,12 @@ const PageSignUp = () => {
       return;
     }
 
-    console.log('Submitting signup with:', { name, email, password: '***' });
+    console.log('Submitting signup with:', { firstName, lastName, email, password: '***' });
     console.log('API URL:', process.env.NEXT_PUBLIC_API_URL || "http://0.0.0.0:4000/api");
     setLoading(true);
     mutation.mutate({
-      name: name.trim(),
+      firstName: firstName.trim(),
+      lastName: lastName.trim(),
       email: email.trim(),
       password: password,
     });
@@ -96,19 +98,31 @@ const PageSignUp = () => {
           {/* FORM */}
           <form className="grid grid-cols-1 gap-5" onSubmit={handleSubmit}>
             <label className="block">
-              <span className="text-neutral-800 dark:text-neutral-200">Name</span>
+              <span className="text-neutral-800 dark:text-neutral-200">First Name *</span>
               <Input
                 type="text"
-                placeholder="Name"
+                placeholder="First Name"
                 className="mt-1"
                 required
-                value={name}
-                onChange={(e) => setName(e.target.value)}
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
               />
             </label>
 
             <label className="block">
-              <span className="text-neutral-800 dark:text-neutral-200">Email</span>
+              <span className="text-neutral-800 dark:text-neutral-200">Last Name *</span>
+              <Input
+                type="text"
+                placeholder="Last Name"
+                className="mt-1"
+                required
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+              />
+            </label>
+
+            <label className="block">
+              <span className="text-neutral-800 dark:text-neutral-200">Email *</span>
               <Input
                 type="email"
                 placeholder="Email Id"
@@ -121,7 +135,7 @@ const PageSignUp = () => {
 
             <label className="block relative">
               <span className="flex justify-between items-center text-neutral-800 dark:text-neutral-200">
-                Password
+                Password *
               </span>
               <Input
                 type={showPassword ? "text" : "password"}
@@ -142,7 +156,7 @@ const PageSignUp = () => {
 
             <label className="block relative">
               <span className="flex justify-between items-center text-neutral-800 dark:text-neutral-200">
-                Confirm Password
+                Confirm Password *
               </span>
               <Input
                 type={showConfirmPassword ? "text" : "password"}
@@ -165,7 +179,7 @@ const PageSignUp = () => {
               )}
             </label>
 
-            <ButtonPrimary type="submit" disabled={loading || password !== confirmPassword}>
+            <ButtonPrimary type="submit" disabled={loading || password !== confirmPassword || !firstName.trim() || !lastName.trim()}>
               {loading ? "Signing up..." : "Continue"}
             </ButtonPrimary>
           </form>
