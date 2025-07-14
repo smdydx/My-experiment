@@ -31,7 +31,7 @@ mode = "parallel"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "cd MyFullstack/HEDNORBACKEND && python3 main.py"
+args = "cd MyFullstack/HEDNORBACKEND && python main.py"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
