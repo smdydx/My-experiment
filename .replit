@@ -2,3 +2,37 @@ modules = ["nodejs-20", "web"]
 
 [nix]
 channel = "stable-24_05"
+
+[workflows]
+runButton = "Full Stack"
+
+[[workflows.workflow]]
+name = "Backend"
+author = 45020397
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd MyFullstack/HEDNORBACKEND && python main.py"
+
+[[workflows.workflow]]
+name = "Frontend"
+author = 45020397
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd MyFullstack/HednorFrontend-develop && npm run dev"
+
+[[workflows.workflow]]
+name = "Full Stack"
+author = 45020397
+mode = "parallel"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd MyFullstack/HEDNORBACKEND && python main.py"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd MyFullstack/HednorFrontend-develop && npm run dev"
